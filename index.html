@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberCheck PYME | Paulo Navarrete – Consultor Senior TI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080c10;
+    --deep: #0d1520;
+    --card: #111923;
+    --border: #1e2d3d;
+    --accent: #00c8ff;
+    --accent2: #0066ff;
+    --green: #00e5a0;
+    --text: #c8d8e8;
+    --muted: #5a7a95;
+    --white: #f0f6ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 6%;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+
+  .nav-links { display: flex; gap: 2rem; }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 6% 5rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
+    bottom: 50px; left: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.2);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text);
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--black);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(0,200,255,0.2);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0,200,255,0.35);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background: rgba(0,200,255,0.05);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* ── LOGOS (empresas) ── */
+  .logos-section {
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem 6%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,21,32,0.6);
+  }
+
+  .logos-label {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .logos-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-item {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .logo-item:hover { opacity: 1; color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; padding: 6rem 6%; }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROBLEMS ── */
+  .problems { background: rgba(13,21,32,0.4); }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .problem-card:hover {
+    border-color: rgba(0,200,255,0.3);
+    transform: translateY(-3px);
+  }
+
+  .problem-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .problem-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .problem-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── SERVICES ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .service-card:hover {
+    border-color: rgba(0,200,255,0.4);
+    transform: translateY(-4px);
+  }
+
+  .service-card.featured {
+    border-color: rgba(0,200,255,0.4);
+    background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,200,255,0.04));
+  }
+
+  .service-card.featured::before {
+    content: 'MÁS POPULAR';
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+  }
+
+  .service-tier {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    margin: 1rem 0;
+  }
+  .service-price span {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .service-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .service-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .service-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .service-btn {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    color: var(--white);
+  }
+  .service-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .service-card.featured .service-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--black);
+    border: none;
+  }
+  .service-card.featured .service-btn:hover {
+    box-shadow: 0 0 30px rgba(0,200,255,0.3);
+    transform: translateY(-1px);
+  }
+
+  /* ── PROCESS ── */
+  .process { background: rgba(13,21,32,0.4); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(0,200,255,0.12);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .nav-links { display: none; }
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .cert-tag {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .cert-tag span { color: var(--accent); margin-right: 0.3rem; }
+
+  /* ── TESTIMONIAL / TRUST ── */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .trust-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+
+  .trust-card p {
+    font-size: 0.92rem;
+    color: var(--text);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .trust-author {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .trust-role { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, rgba(0,102,255,0.1), rgba(0,200,255,0.05));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 6rem 6%;
+  }
+
+  .cta-section .section-title { margin: 0 auto 1rem; }
+  .cta-section .section-sub { margin: 0 auto 2.5rem; text-align: center; }
+
+  .cta-contacts {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--accent); }
+  .contact-item .icon { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 6%;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p { font-size: 0.82rem; color: var(--muted); }
+  footer a { color: var(--muted); text-decoration: none; font-size: 0.82rem; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Cyber<span>Check</span> PYME</div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#contacto" class="nav-cta">Diagnóstico Gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="badge">Consultoría TI Senior · Santiago, Chile</div>
+    <h1>Protege tu empresa.<br>Antes de que<br><span class="highlight">sea tarde.</span></h1>
+    <p class="hero-sub">Auditorías de ciberseguridad e infraestructura cloud para PYMEs chilenas. 25 años de experiencia real en banca, energía y telecomunicaciones.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">→ Diagnóstico gratuito</a>
+      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">25<span>+</span></div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div>
+        <div class="stat-num">1.200<span>+</span></div>
+        <div class="stat-label">Servidores gestionados</div>
+      </div>
+      <div>
+        <div class="stat-num">30<span>%</span></div>
+        <div class="stat-label">Reducción costos operativos</div>
+      </div>
+      <div>
+        <div class="stat-num">27<span>+</span></div>
+        <div class="stat-label">Certificaciones</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-section">
+  <p class="logos-label">Experiencia comprobada en empresas de clase mundial</p>
+  <div class="logos-row">
+    <span class="logo-item">Coca-Cola</span>
+    <span class="logo-item">BCI Banco</span>
+    <span class="logo-item">IBM</span>
+    <span class="logo-item">ENTEL</span>
+    <span class="logo-item">Dell-EMC</span>
+    <span class="logo-item">Stefanini</span>
+    <span class="logo-item">ENEX</span>
+  </div>
+</div>
+
+<!-- PROBLEMAS -->
+<section class="problems" id="problemas">
+  <div class="reveal">
+    <span class="section-label">¿Te identificas?</span>
+    <h2 class="section-title">Los riesgos que tu empresa<br>probablemente no ve</h2>
+    <p class="section-sub">El 60% de las PYMEs cierran dentro de 6 meses tras un ciberataque. La mayoría no lo sabe hasta que es demasiado tarde.</p>
+  </div>
+  <div class="problems-grid">
+    <div class="problem-card reveal">
+      <div class="problem-icon">🔓</div>
+      <h3>Accesos sin control</h3>
+      <p>Empleados con más permisos de los necesarios. Contraseñas débiles o compartidas. Puertas abiertas para cualquier atacante.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">☁️</div>
+      <h3>Cloud mal configurado</h3>
+      <p>Azure, AWS o Google Cloud sin políticas de seguridad adecuadas exponen datos críticos sin que nadie lo note.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">💾</div>
+      <h3>Sin respaldos confiables</h3>
+      <p>Muchas empresas creen que tienen respaldos. Hasta que necesitan recuperar información y descubren que no funcionaban.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">📋</div>
+      <h3>Incumplimiento normativo</h3>
+      <p>ISO 27001, Ley de Protección de Datos, PCI-DSS. Multas y sanciones que pueden paralizar su operación.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">🛑</div>
+      <h3>Sin plan de continuidad</h3>
+      <p>¿Cuánto le cuesta a su empresa una hora sin sistema? ¿Un día? La mayoría no tiene un DRP actualizado.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">👁️</div>
+      <h3>Sin monitoreo activo</h3>
+      <p>Los ataques ocurren silenciosamente. Sin visibilidad 24/7, un intruso puede estar en sus sistemas por meses.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="reveal">
+    <span class="section-label">Soluciones</span>
+    <h2 class="section-title">CyberCheck PYME</h2>
+    <p class="section-sub">Tres niveles de auditoría diseñados para el tamaño y presupuesto de su empresa.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-tier">Nivel 01</div>
+      <h3>Básico</h3>
+      <div class="service-price">$250.000 <span>CLP</span></div>
+      <p class="service-desc">Diagnóstico inicial para empresas que quieren conocer su exposición real al riesgo.</p>
+      <ul class="service-features">
+        <li>Análisis de vulnerabilidades externas</li>
+        <li>Revisión de accesos y contraseñas</li>
+        <li>Evaluación de configuración cloud</li>
+        <li>Informe ejecutivo con hallazgos</li>
+        <li>Presentación de resultados (1 hora)</li>
+      </ul>
+      <a href="#contacto" class="service-btn">Contratar →</a>
+    </div>
+
+    <div class="service-card featured reveal">
+      <div class="service-tier">Nivel 02</div>
+      <h3>Estándar</h3>
+      <div class="service-price">$450.000 <span>CLP</span></div>
+      <p class="service-desc">Auditoría completa con plan de acción concreto para resolver cada vulnerabilidad encontrada.</p>
+      <ul class="service-features">
+        <li>Todo lo del nivel Básico</li>
+        <li>Análisis de infraestructura interna</li>
+        <li>Revisión de backups y DRP</li>
+        <li>Plan de mitigación priorizado</li>
+        <li>Recomendaciones técnicas detalladas</li>
+        <li>Seguimiento a 15 días</li>
+      </ul>
+      <a href="#contacto" class="service-btn">Contratar →</a>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-tier">Nivel 03</div>
+      <h3>Completo</h3>
+      <div class="service-price">$800.000 <span>CLP</span></div>
+      <p class="service-desc">Acompañamiento integral para empresas que necesitan cumplimiento normativo y transformación digital.</p>
+      <ul class="service-features">
+        <li>Todo lo del nivel Estándar</li>
+        <li>Evaluación ISO 27001 / NIST</li>
+        <li>Diseño de arquitectura segura</li>
+        <li>Acompañamiento 30 días</li>
+        <li>Capacitación al equipo TI</li>
+        <li>Roadmap tecnológico 12 meses</li>
+      </ul>
+      <a href="#contacto" class="service-btn">Contratar →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="process" id="proceso">
+  <div class="reveal">
+    <span class="section-label">Metodología</span>
+    <h2 class="section-title">Cómo trabajamos</h2>
+    <p class="section-sub">Un proceso claro, sin tecnicismos y con resultados medibles.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3>Llamada inicial gratuita</h3>
+      <p>30 minutos para entender su negocio, sus sistemas actuales y los riesgos más urgentes. Sin compromiso.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h3>Diagnóstico técnico</h3>
+      <p>Análisis profundo de su infraestructura, accesos, configuraciones cloud y postura de seguridad actual.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h3>Informe ejecutivo</h3>
+      <p>Reporte claro con hallazgos, nivel de riesgo por área y recomendaciones priorizadas por impacto.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h3>Plan de acción</h3>
+      <p>Hoja de ruta concreta para resolver cada vulnerabilidad. Acompañamiento en la implementación según el nivel contratado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="section-label">Quién está detrás</span>
+      <h2 class="section-title">Paulo Navarrete</h2>
+      <p>Ingeniero en Conectividad y Redes (DUOC UC), con formación ejecutiva en Harvard Business Publishing 2025. Más de 25 años liderando infraestructura TI en las empresas más exigentes de Chile.</p>
+      <p>He gestionado plataformas críticas en banca (BCI, Banco Security, BankBoston), energía (ENEX), telecomunicaciones (ENTEL) y empresas multinacionales (Coca-Cola Andina, IBM, Dell-EMC), coordinando equipos de hasta 26 especialistas en 4 países.</p>
+      <p>He trabajado codo a codo con KPMG, Deloitte y Ernst & Young en revisiones de seguridad y cumplimiento normativo.</p>
+    </div>
+    <div class="reveal">
+      <div class="certs-grid">
+        <div class="cert-tag"><span>✓</span> AZ-500 Azure Security</div>
+        <div class="cert-tag"><span>✓</span> SC-200 Security Ops</div>
+        <div class="cert-tag"><span>✓</span> AZ-104 Azure Admin</div>
+        <div class="cert-tag"><span>✓</span> SC-300 Identity</div>
+        <div class="cert-tag"><span>✓</span> MS-500 M365 Security</div>
+        <div class="cert-tag"><span>✓</span> SC-400 Info Protection</div>
+        <div class="cert-tag"><span>✓</span> VCP6 VMware</div>
+        <div class="cert-tag"><span>✓</span> ITIL v3 ITSM</div>
+        <div class="cert-tag"><span>✓</span> AZ-900 Azure Fund.</div>
+        <div class="cert-tag"><span>✓</span> Harvard BFA 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="contacto">
+  <div class="reveal">
+    <span class="section-label">Próximo paso</span>
+    <h2 class="section-title">¿Su empresa está realmente protegida?</h2>
+    <p class="section-sub">Solicite su diagnóstico inicial gratuito de 30 minutos. Sin costo, sin compromiso. Solo claridad sobre sus riesgos reales.</p>
+    <a href="https://wa.me/56982880916?text=Hola%20Paulo,%20quiero%20un%20diagn%C3%B3stico%20gratuito%20para%20mi%20empresa" class="btn-primary" target="_blank">→ Agendar diagnóstico gratuito por WhatsApp</a>
+    <div class="cta-contacts">
+      <a href="mailto:paulo.pascal@gmail.com" class="contact-item">
+        <span class="icon">✉</span> paulo.pascal@gmail.com
+      </a>
+      <a href="tel:+56982880916" class="contact-item">
+        <span class="icon">📱</span> +569 8288 0916
+      </a>
+      <a href="https://www.linkedin.com/in/paulo-cesar-navarrete-pascal" target="_blank" class="contact-item">
+        <span class="icon">in</span> LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Paulo César Navarrete Pascal · CyberCheck PYME</p>
+  <p>Santiago, Chile · <a href="mailto:paulo.pascal@gmail.com">paulo.pascal@gmail.com</a></p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
